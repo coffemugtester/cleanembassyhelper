@@ -19,7 +19,11 @@ func main() {
 	colyClient := coly.NewClient()
 
 	scrappy := usecases.NewScraper(colyClient)
-	embassies := scrappy.GetEmbassies(*homeCountry, *hostCountry)
+	embassies, err := scrappy.GetEmbassies(*homeCountry, *hostCountry)
+	if err != nil {
+		fmt.Printf("scrappy.GetEmbassies error: %v\n", err)
+		return
+	}
 	fmt.Printf("Embassies: %v\n", embassies)
 }
 

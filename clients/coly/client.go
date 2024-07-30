@@ -21,6 +21,6 @@ func NewClient() *Client {
 	}
 }
 
-func (c *Client) GetEmbassies(homeCountry, hostCountry string) []models.Embassy {
+func (c *Client) GetEmbassies(homeCountry, hostCountry string) ([]models.Embassy, error) {
 	return scraper.GetEmbassies(c.colyClient, homeCountry, hostCountry)
 }

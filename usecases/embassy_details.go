@@ -16,6 +16,6 @@ func NewScraper(colyClient ColyClient) *EmbassyDetails {
 	}
 }
 
-func (e *EmbassyDetails) GetEmbassies(homeCountry string, hostCountry string) []models.Embassy {
+func (e *EmbassyDetails) GetEmbassies(homeCountry string, hostCountry string) ([]models.Embassy, error) {
 	return e.colyClient.GetEmbassies(homeCountry, hostCountry)
 }
