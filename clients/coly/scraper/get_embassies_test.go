@@ -90,13 +90,11 @@ func TestGet(t *testing.T) {
 
 			client := NewColyClient(server.URL)
 
-			result := GetEmbassies(client, tt.homeCountry, tt.hostCountry)
-
-			//TODO: assert error
-			//if tt.expectedError != nil {
-			//	assert.Equal(t, tt.expectedError, result)
-			//	return
-			//}
+			result, err := GetEmbassies(client, tt.homeCountry, tt.hostCountry)
+			if tt.expectedError != nil {
+				assert.Equal(t, tt.expectedError, err)
+				return
+			}
 			assert.Equal(t, tt.expectedResult, result)
 
 		})

@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-func GetEmbassies(client *ColyClient, homeCountry, hostCountry string) []models.Embassy {
+func GetEmbassies(client *ColyClient, homeCountry, hostCountry string) ([]models.Embassy, error) {
 
 	var result []models.Embassy
 
@@ -48,14 +48,15 @@ func GetEmbassies(client *ColyClient, homeCountry, hostCountry string) []models.
 	err := client.collector.Visit(url)
 	if err != nil {
 		fmt.Printf("Error: %v", err)
-		return nil
+		return nil, err
 	}
 
 	if len(result) == 0 {
 		fmt.Errorf("no embassies found for %s in %s", homeCountry, hostCountry)
+		return nil, fmt.Errorf("no embassies found for %s in %s", homeCountry, hostCountry)
 	}
 
-	return result
+	return result, nil
 }
 
 func extractLastWord(s string) string {
