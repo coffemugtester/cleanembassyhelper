@@ -5,12 +5,10 @@ import (
 	"clean_embassy_helper/usecases"
 )
 
-//TODO:
-
-var _ EmbassyUseCase = (*EmbassyService)(nil)
+var _ EmbassyUsecase = (*EmbassyService)(nil)
 
 type EmbassyService struct {
-	embassyUsecase EmbassyUseCase
+	embassyUsecase EmbassyUsecase
 }
 
 func NewEmbassyService() *EmbassyService {
