@@ -1,8 +1,7 @@
 package main
 
 import (
-	"clean_embassy_helper/clients/coly"
-	"clean_embassy_helper/usecases"
+	"clean_embassy_helper/services"
 	"flag"
 	"fmt"
 )
@@ -16,12 +15,10 @@ func main() {
 	}
 	fmt.Printf("Home country: %s\nHost country: %s\n", *homeCountry, *hostCountry)
 
-	colyClient := coly.NewClient()
-
-	scrappy := usecases.NewScraper(colyClient)
-	embassies, err := scrappy.GetEmbassies(*homeCountry, *hostCountry)
+	embassyService := services.NewEmbassyService()
+	embassies, err := embassyService.GetEmbassies(*homeCountry, *hostCountry)
 	if err != nil {
-		fmt.Printf("scrappy.GetEmbassies error: %v\n", err)
+		fmt.Printf("embassyService.GetEmbassies error: %v\n", err)
 		return
 	}
 	fmt.Printf("Embassies: %v\n", embassies)
