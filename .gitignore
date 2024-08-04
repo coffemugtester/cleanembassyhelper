@@ -1,1 +1,2 @@
-internal/conf/local.yaml
+local.yaml
+.env

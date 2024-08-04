@@ -8,6 +8,9 @@ import (
 
 func main() {
 
+	//TODO: use init function to load config and shared resources
+	//TODO: env var for root path
+
 	homeCountry, hostCountry, err := parseFlags()
 	if err != nil {
 		fmt.Printf("parseFlags error: %v\n", err)

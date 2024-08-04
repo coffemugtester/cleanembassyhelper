@@ -5,21 +5,19 @@ import (
 	"clean_embassy_helper/internal/models"
 )
 
-//TODO: learn about init function
-
 var _ ColyClient = (*EmbassyUsecase)(nil)
 
 type EmbassyUsecase struct {
-	colyClient ColyClient
+	scraper ColyClient
 }
 
 func NewEmbassyUsecase() *EmbassyUsecase {
 	colyClient := coly.NewClient()
 	return &EmbassyUsecase{
-		colyClient: colyClient,
+		scraper: colyClient,
 	}
 }
 
 func (e *EmbassyUsecase) GetEmbassies(homeCountry string, hostCountry string) ([]models.Embassy, error) {
-	return e.colyClient.GetEmbassies(homeCountry, hostCountry)
+	return e.scraper.GetEmbassies(homeCountry, hostCountry)
 }

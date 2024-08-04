@@ -6,8 +6,6 @@ import (
 	"clean_embassy_helper/internal/models"
 )
 
-// type Config struct {...} for the colyClient client i.e.: url
-
 var cfg = conf.LoadConfig()
 
 type Client struct {
