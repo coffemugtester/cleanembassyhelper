@@ -58,25 +58,23 @@ type Client struct {
 	//client             *mongo.Client
 }
 
-func NewCRUDClient(mgoConf conf.MgoConfig) *Client {
+func NewCRUDClient(mgoConf conf.MgoConfig, m MongoNonInter) *Client {
 
 	fmt.Printf("Creating new CRUD client with config: %v\n", mgoConf)
 
-	var mgoNonInterface MongoNonInter
+	m.client, _ = m.Connect(mgoConf)
+	m.collection = m.Collection(mgoConf.MongoDb, mgoConf.MongoCollection)
 
-	mgoNonInterface.client, _ = mgoNonInterface.Connect(mgoConf)
-	mgoNonInterface.collection = mgoNonInterface.Collection(mgoConf.MongoDb, mgoConf.MongoCollection)
-
-	mgoNonInterface.Connect(mgoConf)
+	m.Connect(mgoConf)
 	fmt.Printf("Connected to MongoDB\n")
-	fmt.Printf("t.client: %v\n", mgoNonInterface.client)
+	fmt.Printf("t.client: %v\n", m.client)
 
 	fmt.Printf("Pinging MongoDB\n")
 
-	mgoNonInterface.Ping()
+	m.Ping()
 	return &Client{
 		mgoDB:              mgoConf.MongoDb,
 		mgoCollection:      mgoConf.MongoCollection,
-		mgoClientInterface: mgoNonInterface,
+		mgoClientInterface: m,
 	}
 }
