@@ -8,6 +8,7 @@ import (
 
 func main() {
 
+	//TODO: add controller
 	//TODO: env var for root path
 
 	homeCountry, hostCountry, err := parseFlags()
