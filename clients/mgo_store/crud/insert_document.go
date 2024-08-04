@@ -2,20 +2,18 @@ package crud
 
 import (
 	"clean_embassy_helper/internal/models"
-	"context"
 	"fmt"
 )
 
 func InsertDocument(client *Client, document models.Embassy) (string, error) {
+	fmt.Printf("Inserting document: %v\n", document)
 
-	collection := client.client.Database(client.mgoDB).Collection(client.mgoCollection)
+	client.mgoClientInterface.Collection(client.mgoDB, client.mgoCollection)
 
-	insertedDoc, err := collection.InsertOne(context.TODO(), document)
+	insertedDoc, err := client.mgoClientInterface.InsertOne(document)
 	if err != nil {
 		return "", err
 	}
 
-	documentID := fmt.Sprintf("%v", insertedDoc.InsertedID)
-
-	return documentID, nil
+	return insertedDoc, nil
 }

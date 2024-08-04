@@ -1,10 +1,9 @@
 package models
 
 type Embassy struct {
-	//TODO: add bson tags
-	HomeCountry string
-	HostCountry string
-	Name        string
-	MapLink     string
-	City        string
+	HomeCountry string `bson:"home_country"`
+	HostCountry string `bson:"host_country"`
+	Name        string `bson:"name"`
+	MapLink     string `bson:"map_link"`
+	City        string `bson:"city"`
 }
