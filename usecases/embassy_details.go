@@ -1,6 +1,7 @@
 package usecases
 
 import (
+	"clean_embassy_helper/clients/coly"
 	"clean_embassy_helper/internal/models"
 )
 
@@ -10,7 +11,8 @@ type EmbassyUsecase struct {
 	scraper ColyClient
 }
 
-func NewEmbassyUsecase(colyClient ColyClient) *EmbassyUsecase {
+func NewEmbassyUsecase(domain string) *EmbassyUsecase {
+	colyClient := coly.NewClient(domain)
 	return &EmbassyUsecase{
 		scraper: colyClient,
 	}

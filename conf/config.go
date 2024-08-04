@@ -7,12 +7,16 @@ import (
 	"os"
 )
 
-type Config struct {
-	ApiKey          string `mapstructure:"api_key,omitempty"`
+type MgoConfig struct {
 	MongoUri        string `mapstructure:"mongo_uri,omitempty"`
-	MongoDb         string `mapstructure:"mongo_db,omitempty"`
 	MongoCollection string `mapstructure:"mongo_collection,omitempty"`
-	Domain          string `mapstructure:"domain,omitempty"`
+	MongoDb         string `mapstructure:"mongo_db,omitempty"`
+}
+
+type Config struct {
+	ApiKey string    `mapstructure:"api_key,omitempty"`
+	Domain string    `mapstructure:"domain,omitempty"`
+	Mgo    MgoConfig `mapstructure:"mgo,omitempty"`
 }
 
 func LoadConfig() Config {

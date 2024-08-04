@@ -8,7 +8,6 @@ import (
 
 func main() {
 
-	//TODO: use init function to load config and shared resources
 	//TODO: env var for root path
 
 	homeCountry, hostCountry, err := parseFlags()
@@ -29,7 +28,16 @@ func main() {
 		fmt.Printf("embassyService.GetEmbassies error: %v\n", err)
 		return
 	}
+
+	insertedID, err := deps.Mgo.InsertDocument(embassies[0])
+	if err != nil {
+		fmt.Printf("mgoService.InsertDocument error: %v\n", err)
+		return
+	}
+
 	fmt.Printf("Embassies: %v\n", embassies)
+	fmt.Printf("Embassy: %v\n", embassies[0])
+	fmt.Printf("Inserted ID: %s\n", insertedID)
 }
 
 func parseFlags() (*string, *string, error) {

@@ -6,15 +6,16 @@ import (
 )
 
 type Client struct {
-	colyClient *agent.ColyClient
+	colyAgent *agent.ColyClient
 }
 
-func NewClient(client *agent.ColyClient) *Client {
+func NewClient(domain string) *Client {
+	ColyClientAgent := agent.NewColyClient(domain)
 	return &Client{
-		colyClient: client,
+		colyAgent: ColyClientAgent,
 	}
 }
 
 func (c *Client) GetEmbassies(homeCountry, hostCountry string) ([]models.Embassy, error) {
-	return agent.GetEmbassies(c.colyClient, homeCountry, hostCountry)
+	return agent.GetEmbassies(c.colyAgent, homeCountry, hostCountry)
 }

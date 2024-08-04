@@ -1,8 +1,6 @@
 package config
 
 import (
-	"clean_embassy_helper/clients/coly"
-	"clean_embassy_helper/clients/coly/agent"
 	"clean_embassy_helper/conf"
 	"clean_embassy_helper/services"
 	"clean_embassy_helper/usecases"
@@ -11,19 +9,19 @@ import (
 type Dependencies struct {
 	//TODO: make deps private once there's an initHandler() function
 	EmbassyService *services.EmbassyService
-	//Mgo 		  *services.MgoService
+	Mgo            *services.MgoService
 }
 
 func InitDependencies() (Dependencies, error) {
 
 	cfg := conf.LoadConfig()
 
-	scraperColyClient := agent.NewColyClient(cfg.Domain)
-	colyClient := coly.NewClient(scraperColyClient)
-	embassyUsecase := usecases.NewEmbassyUsecase(colyClient)
+	embassyUsecase := usecases.NewEmbassyUsecase(cfg.Domain)
+	mgoUsecase := usecases.NewInsertUseCase(cfg.Mgo)
 
 	return Dependencies{
 		EmbassyService: services.NewEmbassyService(embassyUsecase),
+		Mgo:            services.NewMgoService(mgoUsecase),
 	}, nil
 }
 
