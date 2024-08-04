@@ -2,7 +2,6 @@ package services
 
 import (
 	"clean_embassy_helper/internal/models"
-	"clean_embassy_helper/usecases"
 )
 
 var _ EmbassyUsecase = (*EmbassyService)(nil)
@@ -11,8 +10,7 @@ type EmbassyService struct {
 	embassyUsecase EmbassyUsecase
 }
 
-func NewEmbassyService() *EmbassyService {
-	embassyUsecase := usecases.NewEmbassyUsecase()
+func NewEmbassyService(embassyUsecase EmbassyUsecase) *EmbassyService {
 	return &EmbassyService{
 		embassyUsecase: embassyUsecase,
 	}

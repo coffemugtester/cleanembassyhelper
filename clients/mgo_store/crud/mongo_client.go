@@ -7,11 +7,11 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-type MongoClient struct {
+type MgoClient struct {
 	*mongo.Client
 }
 
-func NewMongoClient(uri string) (*MongoClient, error) { // (uri string) (*MongoClient, error) {
+func NewMongoClient(uri string) (*MgoClient, error) { // (uri string) (*MgoClient, error) {
 
 	clientOptions := options.Client().ApplyURI(uri)
 	client, err := mongo.Connect(context.TODO(), clientOptions)
@@ -21,10 +21,10 @@ func NewMongoClient(uri string) (*MongoClient, error) { // (uri string) (*MongoC
 
 	client.Ping(context.Background(), nil)
 
-	return &MongoClient{Client: client}, nil
+	return &MgoClient{Client: client}, nil
 }
 
-func InsertDocument(client *MongoClient, embassy models.Embassy) (interface{}, error) {
+func InsertDocument(client *MgoClient, embassy models.Embassy) (interface{}, error) {
 
 	collection := client.Database("embassy").Collection("embassy")
 

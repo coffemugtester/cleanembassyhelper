@@ -12,8 +12,7 @@ type Client struct {
 	colyClient *scraper.ColyClient
 }
 
-func NewClient() *Client {
-	client := scraper.NewColyClient(cfg.Domain)
+func NewClient(client *scraper.ColyClient) *Client {
 	return &Client{
 		colyClient: client,
 	}

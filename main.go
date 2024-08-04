@@ -1,7 +1,7 @@
 package main
 
 import (
-	"clean_embassy_helper/services"
+	"clean_embassy_helper/config"
 	"flag"
 	"fmt"
 )
@@ -18,8 +18,13 @@ func main() {
 	}
 	fmt.Printf("Home country: %s\nHost country: %s\n", *homeCountry, *hostCountry)
 
-	embassyService := services.NewEmbassyService()
-	embassies, err := embassyService.GetEmbassies(*homeCountry, *hostCountry)
+	deps, err := config.InitDependencies()
+	if err != nil {
+		fmt.Printf("config.InitDependencies error: %v\n", err)
+		return
+	}
+
+	embassies, err := deps.EmbassyService.GetEmbassies(*homeCountry, *hostCountry)
 	if err != nil {
 		fmt.Printf("embassyService.GetEmbassies error: %v\n", err)
 		return

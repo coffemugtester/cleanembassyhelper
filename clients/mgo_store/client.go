@@ -1,4 +1,4 @@
-package mongo_store
+package mgo_store
 
 //var cfg = conf.LoadConfig()
 //
