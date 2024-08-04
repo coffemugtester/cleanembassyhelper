@@ -1,4 +1,4 @@
-package scraper
+package agent
 
 const noEmbassiesFound = `
 <html>

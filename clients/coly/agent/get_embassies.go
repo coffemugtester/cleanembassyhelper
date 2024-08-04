@@ -1,4 +1,4 @@
-package scraper
+package agent
 
 import (
 	"clean_embassy_helper/internal/models"

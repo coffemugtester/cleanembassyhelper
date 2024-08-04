@@ -2,7 +2,9 @@ package conf
 
 import (
 	"fmt"
+	"github.com/joho/godotenv"
 	"github.com/spf13/viper"
+	"os"
 )
 
 type Config struct {
@@ -16,7 +18,23 @@ type Config struct {
 func LoadConfig() Config {
 	var config Config
 
-	viper.AddConfigPath("./internal/conf") // look for config in the working directory
+	err := godotenv.Load()
+	if err != nil {
+		fmt.Printf("Error loading .env file: %v\n", err)
+		return Config{}
+	}
+
+	var configPath string
+
+	path, exists := os.LookupEnv("CONFIG_PATH")
+	if !exists {
+		//TODO: set default config path
+		fmt.Printf("Error: CONFIG_PATH not set\n")
+	}
+
+	configPath = path + "/conf"
+
+	viper.AddConfigPath(configPath) // look for config in the working directory
 	viper.SetConfigName("local")
 	viper.SetConfigType("yaml")
 	viper.AutomaticEnv()
