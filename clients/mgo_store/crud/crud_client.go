@@ -9,14 +9,14 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-var _ MongoClient = (*MongoNonInter)(nil)
+var _ MongoClient = (*MongoImpl)(nil)
 
-type MongoNonInter struct {
+type MongoImpl struct {
 	client     *mongo.Client
 	collection *mongo.Collection
 }
 
-func (t MongoNonInter) Connect(mgoConf conf.MgoConfig) (*mongo.Client, error) {
+func (t MongoImpl) Connect(mgoConf conf.MgoConfig) (*mongo.Client, error) {
 
 	client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI(mgoConf.MongoUri))
 	if err != nil {
@@ -27,7 +27,7 @@ func (t MongoNonInter) Connect(mgoConf conf.MgoConfig) (*mongo.Client, error) {
 	return client, nil
 }
 
-func (t MongoNonInter) Ping() error {
+func (t MongoImpl) Ping() error {
 	err := t.client.Ping(context.TODO(), nil)
 	if err != nil {
 		fmt.Printf("Error pinging MongoDB: %v", err)
@@ -36,11 +36,11 @@ func (t MongoNonInter) Ping() error {
 	return nil
 }
 
-func (t MongoNonInter) Collection(nameDB, nameCollection string) *mongo.Collection {
+func (t MongoImpl) Collection(nameDB, nameCollection string) *mongo.Collection {
 	return t.client.Database(nameDB).Collection(nameCollection)
 }
 
-func (t MongoNonInter) InsertOne(document models.Embassy) (string, error) {
+func (t MongoImpl) InsertOne(document models.Embassy) (string, error) {
 	id, err := t.collection.InsertOne(context.TODO(), document)
 	if err != nil {
 		fmt.Printf("Error inserting document: %v", err)
@@ -53,28 +53,26 @@ func (t MongoNonInter) InsertOne(document models.Embassy) (string, error) {
 type Client struct {
 	mgoDB         string
 	mgoCollection string
-	//TODO: needs to be an interface that implements the different mongo operations
-	mgoClientInterface MongoClient
-	//client             *mongo.Client
+	mongoImpl     MongoClient
 }
 
-func NewCRUDClient(mgoConf conf.MgoConfig, m MongoNonInter) *Client {
+func NewCRUDClient(mgoConf conf.MgoConfig, mongoImpl MongoImpl) *Client {
 
 	fmt.Printf("Creating new CRUD client with config: %v\n", mgoConf)
 
-	m.client, _ = m.Connect(mgoConf)
-	m.collection = m.Collection(mgoConf.MongoDb, mgoConf.MongoCollection)
+	mongoImpl.client, _ = mongoImpl.Connect(mgoConf)
+	mongoImpl.collection = mongoImpl.Collection(mgoConf.MongoDb, mgoConf.MongoCollection)
 
-	m.Connect(mgoConf)
+	mongoImpl.Connect(mgoConf)
 	fmt.Printf("Connected to MongoDB\n")
-	fmt.Printf("t.client: %v\n", m.client)
+	fmt.Printf("t.client: %v\n", mongoImpl.client)
 
 	fmt.Printf("Pinging MongoDB\n")
 
-	m.Ping()
+	mongoImpl.Ping()
 	return &Client{
-		mgoDB:              mgoConf.MongoDb,
-		mgoCollection:      mgoConf.MongoCollection,
-		mgoClientInterface: m,
+		mgoDB:         mgoConf.MongoDb,
+		mgoCollection: mgoConf.MongoCollection,
+		mongoImpl:     mongoImpl,
 	}
 }

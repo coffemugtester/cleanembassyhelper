@@ -11,7 +11,7 @@ type Client struct {
 }
 
 func NewClient(mgo conf.MgoConfig) *Client {
-	crudClient := crud.NewCRUDClient(mgo, crud.MongoNonInter{})
+	crudClient := crud.NewCRUDClient(mgo, crud.MongoImpl{})
 	return &Client{
 		crudClient,
 	}
