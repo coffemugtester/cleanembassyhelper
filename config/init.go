@@ -9,7 +9,8 @@ import (
 type Dependencies struct {
 	//TODO: make deps private once there's an initHandler() function
 	EmbassyService *services.EmbassyService
-	Mgo            *services.MgoService
+	MgoService     *services.MgoService
+	GoogleService  *services.GoogleService
 }
 
 func InitDependencies() (Dependencies, error) {
@@ -18,10 +19,12 @@ func InitDependencies() (Dependencies, error) {
 
 	embassyUsecase := usecases.NewEmbassyUsecase(cfg.Domain)
 	mgoUsecase := usecases.NewInsertUseCase(cfg.Mgo)
+	googleUsecase := usecases.NewGoogleUsecase(cfg.ApiKey)
 
 	return Dependencies{
 		EmbassyService: services.NewEmbassyService(embassyUsecase),
-		Mgo:            services.NewMgoService(mgoUsecase),
+		MgoService:     services.NewMgoService(mgoUsecase),
+		GoogleService:  services.NewGoogleService(googleUsecase),
 	}, nil
 }
 

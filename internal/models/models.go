@@ -5,5 +5,6 @@ type Embassy struct {
 	HostCountry string `bson:"host_country"`
 	Name        string `bson:"name"`
 	MapLink     string `bson:"map_link"`
+	GoogleID    string `bson:"google_id"`
 	City        string `bson:"city"`
 }

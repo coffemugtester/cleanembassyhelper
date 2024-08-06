@@ -9,3 +9,7 @@ type ColyClient interface {
 type MgoClient interface {
 	InsertDocument(models.Embassy) (string, error)
 }
+
+type MapsClient interface {
+	GetGoogleID(placeQuery string) string
+}

@@ -8,16 +8,16 @@ import (
 var _ ColyClient = (*EmbassyUsecase)(nil)
 
 type EmbassyUsecase struct {
-	scraper ColyClient
+	agent ColyClient
 }
 
 func NewEmbassyUsecase(domain string) *EmbassyUsecase {
 	colyClient := coly.NewClient(domain)
 	return &EmbassyUsecase{
-		scraper: colyClient,
+		agent: colyClient,
 	}
 }
 
 func (e *EmbassyUsecase) GetEmbassies(homeCountry string, hostCountry string) ([]models.Embassy, error) {
-	return e.scraper.GetEmbassies(homeCountry, hostCountry)
+	return e.agent.GetEmbassies(homeCountry, hostCountry)
 }

@@ -9,3 +9,7 @@ type EmbassyUsecase interface {
 type MgoClientUsecase interface {
 	InsertDocument(models.Embassy) (string, error)
 }
+
+type GoogleUsecase interface {
+	GetGoogleID(placeQuery string) string
+}

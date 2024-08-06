@@ -65,7 +65,7 @@ func NewCRUDClient(mgoConf conf.MgoConfig, mongoImpl MongoImpl) *Client {
 
 	mongoImpl.Connect(mgoConf)
 	fmt.Printf("Connected to MongoDB\n")
-	fmt.Printf("t.client: %v\n", mongoImpl.client)
+	fmt.Printf("t.client nil: %v\n", mongoImpl.client == nil)
 
 	fmt.Printf("Pinging MongoDB\n")
 

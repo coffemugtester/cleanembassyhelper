@@ -4,12 +4,12 @@ import (
 	"clean_embassy_helper/config"
 	"flag"
 	"fmt"
+	"net/url"
 )
 
 func main() {
 
 	//TODO: add controller
-	//TODO: env var for root path
 
 	homeCountry, hostCountry, err := parseFlags()
 	if err != nil {
@@ -30,7 +30,22 @@ func main() {
 		return
 	}
 
-	insertedID, err := deps.Mgo.InsertDocument(embassies[0])
+	parsedURL, err := url.Parse(embassies[0].MapLink)
+	if err != nil {
+		fmt.Printf("url.Parse error: %v\n", err)
+		return
+	}
+
+	queryParams := parsedURL.Query()
+	qParam := queryParams.Get("q")
+
+	fmt.Printf("Query param: %s\n", qParam)
+
+	embassies[0].GoogleID = deps.GoogleService.GetGoogleID(qParam)
+
+	//TODO: decide if scraped data should be in a different table than requested data
+
+	insertedID, err := deps.MgoService.InsertDocument(embassies[0])
 	if err != nil {
 		fmt.Printf("mgoService.InsertDocument error: %v\n", err)
 		return
