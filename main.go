@@ -42,6 +42,13 @@ func main() {
 	fmt.Printf("Query param: %s\n", qParam)
 
 	embassies[0].GoogleID = deps.GoogleService.GetGoogleID(qParam)
+	embassyDetails, err := deps.GoogleService.GetPlaceDetails(embassies[0].GoogleID)
+	if err != nil {
+		fmt.Printf("googleService.GetPlaceDetails error: %v\n", err)
+		return
+	}
+
+	embassies[0].PlaceDetails = embassyDetails
 
 	//TODO: decide if scraped data should be in a different table than requested data
 

@@ -12,4 +12,5 @@ type MgoClientUsecase interface {
 
 type GoogleUsecase interface {
 	GetGoogleID(placeQuery string) string
+	GetPlaceDetails(placeQuery string) (models.PlaceDetails, error)
 }

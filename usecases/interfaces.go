@@ -12,4 +12,5 @@ type MgoClient interface {
 
 type MapsClient interface {
 	GetGoogleID(placeQuery string) string
+	GetPlaceDetails(placeQuery string) (models.PlaceDetails, error)
 }

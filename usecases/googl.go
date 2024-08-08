@@ -1,6 +1,9 @@
 package usecases
 
-import "clean_embassy_helper/clients/googl/mapz"
+import (
+	"clean_embassy_helper/clients/googl"
+	"clean_embassy_helper/internal/models"
+)
 
 var _ MapsClient = (*GoogleUsecase)(nil)
 
@@ -9,12 +12,16 @@ type GoogleUsecase struct {
 }
 
 func NewGoogleUsecase(apiKey string) *GoogleUsecase {
-	mapzClient := mapz.NewMapzClient(apiKey)
+	client := googl.NewClient(apiKey)
 	return &GoogleUsecase{
-		client: mapzClient,
+		client: client,
 	}
 }
 
 func (g *GoogleUsecase) GetGoogleID(placeQuery string) string {
 	return g.client.GetGoogleID(placeQuery)
+}
+
+func (g *GoogleUsecase) GetPlaceDetails(placeQuery string) (models.PlaceDetails, error) {
+	return g.client.GetPlaceDetails(placeQuery)
 }
