@@ -6,12 +6,27 @@ import (
 	"clean_embassy_helper/usecases"
 )
 
+//type Handler struct {
+//	GetEmbassiesInHostCountry func(homeCountry, hostCountry string) ([]models.Embassy, error)
+//}
+
 type Dependencies struct {
 	//TODO: make deps private once there's an initHandler() function
 	EmbassyService *services.EmbassyService
 	MgoService     *services.MgoService
 	GoogleService  *services.GoogleService
 }
+
+//
+//func InitHandlers() (Handler, error) {
+//	deps, err := InitDependencies()
+//	if err != nil {
+//		return Handler{}, err
+//	}
+//	return Handler{
+//		GetEmbassiesInHostCountry: deps.EmbassyService.GetEmbassies,
+//	}, nil
+//}
 
 func InitDependencies() (Dependencies, error) {
 
