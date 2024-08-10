@@ -19,6 +19,9 @@ func GetEmbassies(client *ColyClient, homeCountry, hostCountry string) ([]models
 		fmt.Println("Visiting: ", url)
 	})
 
+	//TODO: do some try .com, then .de, then ...
+	//TODO: find go library/package with country list
+
 	client.collector.OnHTML(".embassy__list", func(e *colly.HTMLElement) {
 		// Create a GoQuery document from the Colly element
 		doc := e.DOM
@@ -53,6 +56,7 @@ func GetEmbassies(client *ColyClient, homeCountry, hostCountry string) ([]models
 
 	if len(result) == 0 {
 		fmt.Errorf("no embassies found for %s in %s", homeCountry, hostCountry)
+		//TODO: should be a sentinel error (known error)
 		return nil, fmt.Errorf("no embassies found for %s in %s", homeCountry, hostCountry)
 	}
 

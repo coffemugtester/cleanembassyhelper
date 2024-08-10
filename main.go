@@ -8,6 +8,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
+// TODO: behavior vs layers
 var rootCmd = &cobra.Command{
 	Use:   "angry-embassy",
 	Short: "Get embassies for a given home and host country",

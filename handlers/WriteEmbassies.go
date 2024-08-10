@@ -37,6 +37,7 @@ func WriteEmbassies(deps config.Dependencies, homeCountry *string, hostCountry *
 		}
 
 		embassy.PlaceDetails = embassyDetails
+		//TODO: this outputs data and whoever requests it either stores it or displays it ...
 
 		//TODO: decide if scraped data should be in a different table than requested data
 		insertedID, err := deps.MgoService.InsertDocument(embassy)

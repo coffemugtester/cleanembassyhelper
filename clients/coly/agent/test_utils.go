@@ -1,5 +1,7 @@
 package agent
 
+// TODO: actual html files to load
+// TODO: what's the actual name of test utils
 const noEmbassiesFound = `
 <html>
 	<head>
